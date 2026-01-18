@@ -1,157 +1,197 @@
 # ICE Observability
+## Structural Observability Layer of the ICE Ecosystem
 
-[![ICE Architecture](https://img.shields.io/badge/ICE-Architecture%20%26%20RFCs-8FB9FF?style=flat)](https://francescomaiomascio.github.io/ice-docs/)
-[![Status](https://img.shields.io/badge/status-active%20research-6B7280?style=flat)](#)
-[![GitHub Sponsors](https://img.shields.io/badge/support-GitHub%20Sponsors-7A7CFF?style=flat)](https://github.com/sponsors/francescomaiomascio)
-[![Buy Me a Coffee](https://img.shields.io/badge/support-Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/francescomaiomascio)
+ICE Observability is the **structural observability layer** of the ICE ecosystem.
 
----
+It defines **how execution is observed, reconstructed, and audited** over time,
+independently from how execution is implemented.
 
-## What this repository is
+ICE Observability is not a tool.
+It is a **system-level architectural constraint**.
 
-**ICE Observability** is the **system-level observability layer** of the ICE ecosystem.
-
-It provides a **sovereign, runtime-agnostic observation model** for:
-
-- execution events  
-- lifecycle transitions  
-- audit trails  
-- security-relevant actions  
-
-This repository defines **how ICE systems are observed**,  
-not how they execute.
-
-Observability is treated as a **first-class architectural concern**,  
-not as a logging utility.
+Without observability, execution is unverifiable.
+Without verification, governance collapses.
+A system without observability cannot be ICE-compliant.
 
 ---
 
-## What ICE Observability is (and is not)
+## Foundation Dependency
+
+This project derives its assumptions and constraints from  
+**ICE Foundation v1.0.0**.
+
+In particular, it enforces:
+
+- Structural Traceability (Invariant I-001)
+- Determinism and Reproducibility (Invariant I-002)
+- Governance (Invariant I-003)
+
+ICE Observability does not reinterpret these invariants.
+It exists to make them **provable**.
+
+---
+
+## What ICE Observability Is
+
+ICE Observability is:
+
+- a **canonical observation model**
+- a **system-wide audit surface**
+- an **immutable event substrate**
+- a **bridge between execution and accountability**
+- a **forensic-grade reconstruction layer**
+
+It defines how systems are **seen**, not how they behave.
+
+---
+
+## What ICE Observability Is Not
 
 ICE Observability is **not**:
 
-- a logging framework  
-- a metrics-only system  
-- a UI or dashboard  
-- a debugging tool  
+- a logging framework
+- a metrics dashboard
+- an APM tool
+- a debugging utility
+- a monitoring UI
 
-ICE Observability **is**:
+Those tools may exist downstream.
 
-- a canonical event model for observation  
-- a routing and fan-out layer for observation events  
-- a filesystem-backed, audit-safe persistence model  
-- a bridge between runtime execution and post-hoc analysis  
+ICE Observability defines the **ground truth**
+they are allowed to observe.
 
-The core rule is strict:
+---
+
+## Core Principle
 
 > **Execution does not observe itself.  
-> Observability observes execution.**
+> Observation is external, passive, and non-authoritative.**
+
+ICE Observability never:
+
+- mutates execution state
+- influences control flow
+- gates capabilities
+- introduces side effects
+
+Observation is **structurally separated** from action.
 
 ---
 
-## Architectural role in ICE
+## Position in the ICE Architecture
 
-ICE Observability sits **outside** of the Runtime.
+ICE Observability sits **outside execution paths**.
 
-It does **not**:
+It may observe:
 
-- influence execution  
-- mutate runtime state  
-- gate capabilities  
-- introduce side effects  
+- ICE Runtime
+- ICE Engine
+- ICE AI
+- ICE Consciousness
+- ICE Studio
+- protocols, providers, and adapters
 
-Instead, it consumes **emitted events** and produces:
+But it never participates in execution.
 
-- structured logs  
-- audit records  
-- traceable execution histories  
-
-This separation is intentional and non-negotiable.
+This separation is non-negotiable.
 
 ---
 
-## Design principles
+## Event-First Observation Model
 
-### Runtime-agnostic
+All observability in ICE is expressed as **immutable events**.
 
-ICE Observability can observe:
+Properties:
 
-- ICE Runtime  
-- ICE Engine  
-- ICE Studio  
-- plugins  
-- protocols  
-- providers  
+- append-only
+- time-ordered
+- causally attributable
+- serializable
+- reconstructable
 
-without requiring them to depend on it.
+There is no hidden state.
+There is no best-effort logging.
+There is no silent loss of information.
 
----
-
-### Event-first observation
-
-All observability data is expressed as **immutable events**.
-
-- no implicit state  
-- no hidden mutation  
-- no best-effort logging  
-
-Observation events are append-only and serializable.
+If it cannot be represented as an event,
+it cannot be governed.
 
 ---
 
-### Filesystem as an audit surface
+## Filesystem as an Audit Surface
 
-The filesystem layout is **part of the specification**.
+ICE Observability treats the filesystem as a **first-class audit medium**.
 
-It reflects **causal domains**, not implementation details.
+The directory structure reflects:
 
-This allows:
+- causal domains
+- execution boundaries
+- lifecycle phases
 
-- offline analysis  
-- reproducible investigations  
-- long-term traceability  
+Not implementation details.
 
----
+This enables:
 
-### Extensible by design
+- offline analysis
+- deterministic replay
+- forensic inspection
+- long-term accountability
 
-ICE Observability supports multiple outputs via:
-
-- sinks (local consumption)  
-- transports (external emission)  
-
-Filesystem, IPC, HTTP, and future transports are treated uniformly.
-
----
-
-## Repository scope
-
-This repository contains:
-
-- the observation event model  
-- routing and fan-out logic  
-- filesystem persistence rules  
-- minimal debug/test sinks  
-
-It does **not** contain:
-
-- frontend log viewers  
-- dashboards  
-- runtime execution code  
+The filesystem is part of the specification,
+not an implementation accident.
 
 ---
 
-## Documentation
+## Extensibility and Fan-Out
 
-Architectural documentation and RFCs are available at:
+Observation events may be routed to multiple sinks:
 
-https://francescomaiomascio.github.io/ice-docs/
+- local filesystem
+- IPC
+- HTTP endpoints
+- external analysis systems
 
-Refer in particular to:
+All sinks are treated uniformly.
 
-- Observability model  
-- Audit and lifecycle semantics  
-- Runtime vs Observability boundaries  
+No sink may alter events.
+No sink may reinterpret meaning.
+
+Observation is **fan-out**, never feedback.
+
+---
+
+## Repository Scope
+
+This repository defines:
+
+- the canonical observation event model
+- routing and fan-out semantics
+- filesystem persistence rules
+- minimal validation and debug sinks
+
+It explicitly does **not** define:
+
+- visualization layers
+- dashboards
+- alerting systems
+- runtime execution logic
+
+Those belong to downstream consumers.
+
+---
+
+## Canonical Status
+
+ICE Observability is **structural**.
+
+If an ICE system cannot:
+
+- reconstruct execution history
+- attribute responsibility
+- prove causality
+- survive post-hoc inspection
+
+then it is **not ICE-compliant**, regardless of correctness or performance.
 
 ---
 
@@ -159,20 +199,14 @@ Refer in particular to:
 
 ICE Observability is under **active research and development**.
 
-APIs and structures may evolve as invariants are refined,
-but architectural boundaries are considered stable.
+Architectural boundaries are considered stable.
+Mechanisms may evolve, constraints will not.
 
 ---
 
-## Support
+## Notes
 
-If you are interested in **system-level observability**,  
-runtime accountability, and long-term architectural research:
+Systems fail quietly when they cannot be observed.
 
-- GitHub Sponsors  
-  https://github.com/sponsors/francescomaiomascio  
-
-- Buy Me a Coffee  
-  https://buymeacoffee.com/francescomaiomascio  
-
-Support goes directly into sustained engineering work.
+ICE Observability exists to ensure that  
+**nothing important can ever fail silently**.
